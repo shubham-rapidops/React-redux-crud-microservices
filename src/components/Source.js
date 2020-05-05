@@ -1,30 +1,26 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import TableUI from './TableUI/TableUI'
 import Header from './Header/Header'
 import data from './Data/Data'
 import ModalBox from './Modal/ModalBox'
 import FormBuilder from './FormBuilder/FormBuilder'
-import {useSelector } from 'react-redux' 
+import {useSelector ,useDispatch } from 'react-redux' 
 import Row from 'antd/es/row'
 import Col from 'antd/es/col'
 import { connect } from 'react-redux'
+import { fetchUsers } from './Redux/UserAction'
 
 
-function Source(props) {
-    const [loading, setloading] = useState(false)
+function Source() {
+   
+    const user = useSelector(state=>state.users)
+    const dispatch = useDispatch();
+    useEffect(() => {
+      // fetchUsers()
+      dispatch(fetchUsers())
+       
+     }, [])
 
-    const reload=()=>{
-        console.log('callback')
-        setloading(true);
-        setTimeout(()=>{
-            setloading(false);
-        },1000)
-    }
-   console.log('source render')
-     const user = useSelector(state=> {
-         console.log('selectr')
-         return state.user
-     })
     
     return (
         <div>
@@ -46,7 +42,7 @@ function Source(props) {
             
             
             
-            <TableUI dataSource= {user} columns={data} callback={reload} />
+            <TableUI dataSource= {user} columns={data}/>
         </div>
     )
 }
@@ -54,5 +50,15 @@ function Source(props) {
 // const mapStateToProps = state => {
 //     return {  user : state.user }
 //  }
-
-export default Source
+const mapStateToProps = state => {
+    return {
+      userData: state.user
+    }
+  }
+  
+const mapDispatchToProps = dispatch => {
+    return {
+      fetchUsers: () => dispatch(fetchUsers())
+    }
+  }
+export default connect(mapStateToProps,mapDispatchToProps)(Source)

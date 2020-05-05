@@ -1,3 +1,6 @@
 export const add_user = 'add_user'
 export const delete_user = 'delete_user'
 export const update_user = 'update_user'
+export const FETCH_USERS_REQUEST = 'FETCH_USERS_REQUEST'
+export const FETCH_USERS_SUCCESS = 'FETCH_USERS_SUCCESS'
+export const FETCH_USERS_FAILURE = 'FETCH_USERS_FAILURE'

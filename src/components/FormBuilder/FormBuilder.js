@@ -6,7 +6,7 @@ import Button from 'antd/es/button'
 
 import {useDispatch} from 'react-redux' 
 
-import { addUser, updateUser } from '../Redux/UserAction'
+import { addUser, updateUser, addUserApi , updateUserApi} from '../Redux/UserAction'
 
 
 const layout = {
@@ -33,10 +33,12 @@ function FormBuilder({record, index}) {
 
     const onFinish = values => {
       if(record){
-        dispatch(updateUser(values , index))
+        dispatch(updateUserApi(record.name, values))
+        // dispatch(updateUser(values , index))
       }
       else{
-      dispatch(addUser(values))
+        dispatch(addUserApi(values))
+        // dispatch(addUser(values))
       // props.addUser(values)
       }
 

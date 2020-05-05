@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
-import UpdateFrom from '../FormBuilder/UpdateFrom'
 import Table from 'antd/es/table'
 import {useDispatch} from 'react-redux' 
-import { deleteUser, updateUser } from '../Redux/UserAction'
+import { deleteUser, deleteUserApi } from '../Redux/UserAction'
 import ModalBox from '../Modal/ModalBox'
 import FormBuilder from '../FormBuilder/FormBuilder'
 import {DeleteOutlined} from '@ant-design/icons'
@@ -10,21 +9,18 @@ import Button from 'antd/es/button'
 
 
 
-function TableUI({dataSource ,callback}) {
+function TableUI({dataSource}) {
 
   console.log("table render")
   const dispatch = useDispatch();
 
-  const handle = index => {      
-    dispatch(deleteUser(index))
+  const handle = (index , record) => {      
+    // dispatch(deleteUser(index))
+    dispatch(deleteUserApi(record.name,record.address))
     // callback();        
   }
   
-  const update = (record , index) => {
-    console.log(record)
-    console.log(index)
-    // dispatch(updateUser(index))
-  }
+  
 
   const columns = [
       {
@@ -54,7 +50,7 @@ function TableUI({dataSource ,callback}) {
           <div>
             <div>
               <span>
-              <Button  type="danger" icon={<DeleteOutlined />} onClick={()=>{handle(rowIndex)}} />
+              <Button  type="danger" icon={<DeleteOutlined />} onClick={()=>{handle(rowIndex , record)}} />
               <ModalBox title='update'><FormBuilder record={record} index={rowIndex}/></ModalBox>
               </span>
             </div>
@@ -75,13 +71,15 @@ function TableUI({dataSource ,callback}) {
     
     return (
         <div style={{paddingTop:'auto'}}>
-            <Table dataSource={dataSource} columns={columns}
-                 rowClassName={() => 'editable-row' }
-                 onRow={(record, rowIndex) => {
-                    return {
-                    //   onClick: event => { console.log(rowIndex)}, 
-                    };}}
-              />;
+
+          <Table 
+            dataSource={dataSource} 
+            columns={columns}
+            rowClassName={() => 'editable-row' }
+            pagination={{ position:'bottomRight', pageSize: 5 }}
+            size="middle"
+          />;
+
         </div>
     )
 }

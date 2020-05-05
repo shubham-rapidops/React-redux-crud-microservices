@@ -23,15 +23,15 @@ function ModalBox({title ,  children}) {
       };
     return (
         <div>
-          <Button type="primary" onClick={showModal} icon={title == 'update' ? <EditOutlined />: '' }>
-            {title == 'update' ? '' : title}
+          <Button type="primary" onClick={showModal} icon={title === 'update' ? <EditOutlined />: '' }>
+            {title === 'update' ? '' : title}
           </Button>
           <Modal
             title={ `${title} modal `}
             visible={visible}
-            // onOk={handleOk}
+            onOk={handleOk}
             onCancel={handleCancel}
-            okButtonProps={{display:false}}
+            // okButtonProps={{display:false}}
           >
            {children}
           </Modal>
